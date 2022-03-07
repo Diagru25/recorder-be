@@ -46,10 +46,8 @@ export class RecordsController {
         ...data,
         audio: file ? file.path : '',
       };
-      console.log(file);
-      //const result = await this.productsService.create(product);
-
-      return apiResponse(res, HttpStatus.CREATED, { record }, 'success');
+      const result = await this.recordsService.insert(record);
+      return apiResponse(res, HttpStatus.CREATED, result, 'success');
     } catch (error) {
       return apiResponse(res, HttpStatus.BAD_REQUEST, {}, error);
     }

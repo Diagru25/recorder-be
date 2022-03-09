@@ -14,8 +14,8 @@ export class tbl_record {
     @Prop({default: -1})
     gender: number;
 
-    @Prop({default: 0})
-    age: number
+    @Prop({default: ''})
+    age: string
 
     @Prop({default: ''})
     area: string

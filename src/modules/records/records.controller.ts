@@ -7,9 +7,10 @@ import {
   Post,
   Res,
   UploadedFile,
+  UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import apiResponse from 'src/helpers/api_response';
 import { RecordsService } from '../database/services/tbl_record.service';
@@ -27,27 +28,31 @@ export class RecordsController {
 
   @Post('upload')
   @UseInterceptors(
-    FileInterceptor('audio', {
+    FilesInterceptor('files', 5, {
       storage: diskStorage({
         destination: './files/audios',
-        filename: (req, file, cb) => {
+        filename: (req, files, cb) => {
+          console.log('abc: ', files);
           const randomName = Array(32)
             .fill(null)
             .map(() => Math.round(Math.random() * 16).toString(16))
             .join('');
-          return cb(null, `${randomName}${extname(file.originalname)}`);
+          return cb(null, `${randomName}${extname(files.originalname)}`);
         },
       }),
     }),
   )
-  async create(@Body() data, @UploadedFile() file, @Res() res: Response) {
+  async create(@Body() data, @UploadedFiles() files, @Res() res: Response) {
     try {
-      const record = {
-        ...data,
-        audio: file ? file.path : '',
-      };
-      const result = await this.recordsService.insert(record);
-      return apiResponse(res, HttpStatus.CREATED, result, 'success');
+      //   const record = {
+      //     ...data,
+      //     audio: file ? file.path : '',
+      //   };
+
+      console.log('ff: ', files);
+
+      //const result = await this.recordsService.insert(record);
+      //return apiResponse(res, HttpStatus.CREATED, result, 'success');
     } catch (error) {
       return apiResponse(res, HttpStatus.BAD_REQUEST, {}, error);
     }

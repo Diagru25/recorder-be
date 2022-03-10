@@ -32,7 +32,6 @@ export class RecordsController {
       storage: diskStorage({
         destination: './files/audios',
         filename: (req, files, cb) => {
-          console.log('abc: ', files);
           const randomName = Array(32)
             .fill(null)
             .map(() => Math.round(Math.random() * 16).toString(16))
@@ -44,15 +43,19 @@ export class RecordsController {
   )
   async create(@Body() data, @UploadedFiles() files, @Res() res: Response) {
     try {
-      //   const record = {
-      //     ...data,
-      //     audio: file ? file.path : '',
-      //   };
+      const length = files.length;
+      for(let i = 0; i < length; i++) {
+          let record = {
+              audio: files[i].path,
+              text: data.texts[i],
+              gender: data.gender,
+              area: data.area,
+              age: data.age
+          };
 
-      console.log('ff: ', files);
-
-      //const result = await this.recordsService.insert(record);
-      //return apiResponse(res, HttpStatus.CREATED, result, 'success');
+          await this.recordsService.insert(record);
+      }
+      return apiResponse(res, HttpStatus.CREATED, {}, 'success');
     } catch (error) {
       return apiResponse(res, HttpStatus.BAD_REQUEST, {}, error);
     }

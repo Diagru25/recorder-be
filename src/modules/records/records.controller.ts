@@ -16,7 +16,8 @@ import apiResponse from 'src/helpers/api_response';
 import { RecordsService } from '../database/services/tbl_record.service';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-
+import { PythonShell } from 'python-shell';
+import { Buffer } from 'buffer';
 @Controller('/admin/v1/records')
 export class RecordsController {
   constructor(private readonly recordsService: RecordsService) {}
@@ -44,16 +45,16 @@ export class RecordsController {
   async create(@Body() data, @UploadedFiles() files, @Res() res: Response) {
     try {
       const length = files.length;
-      for(let i = 0; i < length; i++) {
-          let record = {
-              audio: files[i].path,
-              text: data.texts[i],
-              gender: data.gender,
-              area: data.area,
-              age: data.age
-          };
+      for (let i = 0; i < length; i++) {
+        let record = {
+          audio: files[i].path,
+          text: data.texts[i],
+          gender: data.gender,
+          area: data.area,
+          age: data.age,
+        };
 
-          await this.recordsService.insert(record);
+        await this.recordsService.insert(record);
       }
       return apiResponse(res, HttpStatus.CREATED, {}, 'success');
     } catch (error) {

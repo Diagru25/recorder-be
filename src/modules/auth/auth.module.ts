@@ -9,14 +9,21 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 
 @Module({
-  imports: [DatabaseModule,PassportModule],
+  imports: [
+    DatabaseModule,
+    PassportModule,
+    JwtModule.register({
+      secret: keys.jwt.JWT_SECRET,
+      signOptions: {
+        expiresIn: keys.jwt.expiresIn,
+      },
+    }),
+  ],
   controllers: [AuthController],
-  providers: [LocalStrategy, JwtStrategy]
+  providers: [LocalStrategy, JwtStrategy],
 })
 export class AuthModule implements NestModule {
-    configure(consumer: MiddlewareConsumer) {
-        consumer
-            .apply(LoggerMiddleware)
-            .forRoutes(AuthController)
-    }
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes(AuthController);
+  }
 }

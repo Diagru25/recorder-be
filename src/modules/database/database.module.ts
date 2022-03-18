@@ -13,6 +13,7 @@ import {
   LogSchema,
   LockIpSchema,
   RecordSchema,
+  SuggestSchema,
   tbl_group,
   tbl_module,
   tbl_permission,
@@ -21,6 +22,7 @@ import {
   tbl_log,
   tbl_lockip,
   tbl_record,
+  tbl_suggest
   
 } from './schema';
 import { GroupsService } from './services/tbl_group.service';
@@ -29,9 +31,11 @@ import { AuthService } from './services/auth.service';
 import { LogService } from './services/tbl_log.service';
 import { LockIpService } from './services/tbl_lockip.services';
 import { RecordsService } from './services/tbl_record.service';
+import { SuggestService } from './services/tbl_suggest.service';
 
 @Module({
   imports: [
+    MongooseModule.forRoot(keys.mongoURI),
     MongooseModule.forFeature([
       {
         name: tbl_group.name,
@@ -62,9 +66,13 @@ import { RecordsService } from './services/tbl_record.service';
         schema: LockIpSchema,
       },
       {
-          name: tbl_record.name,
-          schema: RecordSchema
-      }
+        name: tbl_record.name,
+        schema: RecordSchema,
+      },
+      {
+        name: tbl_suggest.name,
+        schema: SuggestSchema,
+      },
     ]),
     JwtModule.register({
       secret: keys.jwt.JWT_SECRET,
@@ -74,7 +82,23 @@ import { RecordsService } from './services/tbl_record.service';
     }),
   ],
 
-  providers: [GroupsService, UsersService, AuthService, LogService, LockIpService, RecordsService],
-  exports: [GroupsService, UsersService, AuthService, LogService, LockIpService, RecordsService],
+  providers: [
+    GroupsService,
+    UsersService,
+    AuthService,
+    LogService,
+    LockIpService,
+    RecordsService,
+    SuggestService,
+  ],
+  exports: [
+    GroupsService,
+    UsersService,
+    AuthService,
+    LogService,
+    LockIpService,
+    RecordsService,
+    SuggestService,
+  ],
 })
 export class DatabaseModule {}

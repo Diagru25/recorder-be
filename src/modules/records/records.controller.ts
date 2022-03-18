@@ -16,13 +16,16 @@ import apiResponse from 'src/helpers/api_response';
 import { RecordsService } from '../database/services/tbl_record.service';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-
+import { readFileSync } from 'fs';
 @Controller('/admin/v1/records')
 export class RecordsController {
   constructor(private readonly recordsService: RecordsService) {}
 
   @Get()
   async getAll(@Param() params: any, @Res() res: Response) {
+    const f = readFileSync('assets/a.txt', { encoding: 'utf-8' });
+    const lines = f.split(/\r?\n/);
+    console.log(lines);
     return apiResponse(res, 200, {});
   }
 
@@ -30,7 +33,7 @@ export class RecordsController {
   @UseInterceptors(
     FilesInterceptor('files', 5, {
       storage: diskStorage({
-        destination: './files/audios',
+        destination: './assets/audios',
         filename: (req, files, cb) => {
           const randomName = Array(32)
             .fill(null)

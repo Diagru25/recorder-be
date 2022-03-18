@@ -25,10 +25,11 @@ export class LoggerMiddleware implements NestMiddleware {
   lockIpService: LockIpService;
 
   async use(req: Request, res: Response, next: NextFunction) {
-    const lockedIp = await this.lockIpService.getOne({ip: req.ip});
+    // const lockedIp = await this.lockIpService.getOne({ip: req.ip});
 
-    if(lockedIp)
-        throw new UnauthorizedException(`Ip ${req.ip} đã bị khóa!`);
+    // if(lockedIp)
+    //     throw new UnauthorizedException(`Ip ${req.ip} đã bị khóa!`);
+    
     return next();
   }
 }

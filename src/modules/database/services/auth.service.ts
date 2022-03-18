@@ -24,14 +24,13 @@ export class AuthService {
     password: string,
     ip: string,
   ): Promise<any> {
+    const isLockedIp = await this.LockIpModel.findOne({ ip: ip }).exec();
 
-    const isLockedIp = await this.LockIpModel.findOne({ip: ip}).exec();
-
-    if(isLockedIp)
-        return {
-            isValidate: false,
-            description: 'ip da bi khoa'
-        }
+    if (isLockedIp)
+      return {
+        isValidate: false,
+        description: 'ip da bi khoa',
+      };
     //insert log
     const user = await this.userModel
       .findOne({
@@ -53,11 +52,14 @@ export class AuthService {
         isValidate: false,
       };
     }
-    if (user && (await bcrypt.compare(password, user.password)))
-      return {
-        isValidate: true,
-        user,
-      };
+    if (user && (await bcrypt.compare(password, user.password))){
+        console.log('user valid: ', user);
+    return {
+      isValidate: true,
+      user,
+    };
+    } 
+
     await this.logModel.create({
       ip: ip,
       time: new Date().getTime(),
@@ -69,10 +71,13 @@ export class AuthService {
     dt.setMinutes(dt.getMinutes() - 5);
     let from = dt.getTime();
     let to = new Date().getTime();
-    const count = await this.logModel.count({ ip: ip, time: {$gte: from, $lte: to} });
-    if(count >= 3)
-        console.log(`ip: ${ip} should be locked!`)
-        //await this.LockIpModel.create({ip: ip})
+    const count = await this.logModel.count({
+      ip: ip,
+      time: { $gte: from, $lte: to },
+    });
+    if (count >= 3) console.log(`ip: ${ip} should be locked!`);
+    //await this.LockIpModel.create({ip: ip})
+
     return {
       isValidate: false,
     };
@@ -82,11 +87,12 @@ export class AuthService {
     try {
       const payload = {
         sub: user._id,
+        username: user.username
       };
 
       return {
         isSuccess: true,
-        status: HttpStatus.OK,
+        statusCode: HttpStatus.OK,
         data: {
           access_token: this.jwtService.sign(payload),
         },
@@ -94,7 +100,7 @@ export class AuthService {
     } catch (error) {
       return {
         isSuccess: false,
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
       };
     }
   }

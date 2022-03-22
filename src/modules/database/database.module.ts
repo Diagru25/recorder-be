@@ -13,7 +13,7 @@ import {
   LogSchema,
   LockIpSchema,
   RecordSchema,
-  SuggestSchema,
+  DictionarySchema,
   tbl_group,
   tbl_module,
   tbl_permission,
@@ -22,7 +22,7 @@ import {
   tbl_log,
   tbl_lockip,
   tbl_record,
-  tbl_suggest
+  tbl_dictionary
   
 } from './schema';
 import { GroupsService } from './services/tbl_group.service';
@@ -31,7 +31,7 @@ import { AuthService } from './services/auth.service';
 import { LogService } from './services/tbl_log.service';
 import { LockIpService } from './services/tbl_lockip.services';
 import { RecordsService } from './services/tbl_record.service';
-import { SuggestService } from './services/tbl_suggest.service';
+import { DictionaryService } from './services/tbl_dictionary.service';
 
 @Module({
   imports: [
@@ -70,8 +70,8 @@ import { SuggestService } from './services/tbl_suggest.service';
         schema: RecordSchema,
       },
       {
-        name: tbl_suggest.name,
-        schema: SuggestSchema,
+        name: tbl_dictionary.name,
+        schema: DictionarySchema,
       },
     ]),
     JwtModule.register({
@@ -89,7 +89,7 @@ import { SuggestService } from './services/tbl_suggest.service';
     LogService,
     LockIpService,
     RecordsService,
-    SuggestService,
+    DictionaryService,
   ],
   exports: [
     GroupsService,
@@ -98,7 +98,7 @@ import { SuggestService } from './services/tbl_suggest.service';
     LogService,
     LockIpService,
     RecordsService,
-    SuggestService,
+    DictionaryService,
   ],
 })
 export class DatabaseModule {}

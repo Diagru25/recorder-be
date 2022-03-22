@@ -1,4 +1,4 @@
-import { SuggestModule } from './modules/suggest/suggest.module';
+import { DictionaryModule } from './modules/dictionary/dictionary.module';
 import { ResourcesModule } from './modules/resources/resources.module';
 import { Module } from '@nestjs/common';
 import { AuthModule } from './modules/auth/auth.module';
@@ -15,7 +15,7 @@ import { AppGateway } from './utils/app.gateway';
     UsersModule,
     RecordsModule,
     ResourcesModule,
-    SuggestModule
+    DictionaryModule
   ],
   providers: [
       AppGateway

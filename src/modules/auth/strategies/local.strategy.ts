@@ -16,7 +16,6 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     //console.log(req.connection.remoteAddress);
     const result = await this.authService.validateUser(username, password, req.ip);
 
-    console.log(result.user);
     if (!result.isValidate) throw new UnauthorizedException(result.description);
 
     return result.user;

@@ -18,7 +18,7 @@ export class BaseService<T extends Document, dtoT>
     return item;
   }
 
-  async remove(id, filter) {
+  async remove(id) {
     const item = await this.model.findByIdAndDelete(id);
     return item;
   }

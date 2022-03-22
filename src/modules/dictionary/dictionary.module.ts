@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../database/database.module';
-import { SuggestsController } from './suggest.controller';
+import { DictionaryController } from './dictionary.controller';
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [SuggestsController],
+  controllers: [DictionaryController],
 })
-export class SuggestModule {}
+export class DictionaryModule {}

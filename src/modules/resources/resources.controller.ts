@@ -4,7 +4,7 @@ import { Controller, Get, Query, Res } from '@nestjs/common';
 export class ResourcesController {
     constructor() {}
 
-    @Get('/file')
+    @Get('/get_file')
     async getImage(@Query() query, @Res() res) {
         res.sendFile(query.filename, { root: '.' });
     }

@@ -14,7 +14,7 @@ export class UsersController {
   @Get('/current')
   async getCurrentUser(@Req() req: any, @Res() res: Response) {
     const result = await this.usersService.getOneById(req.user.id);
-    console.log(result);
+
     return apiResponse(res, HttpStatus.OK, {user: result})
   }
 

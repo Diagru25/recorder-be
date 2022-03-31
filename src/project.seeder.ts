@@ -15,7 +15,7 @@ export class ProjectSeeder implements Seeder {
     // });
 
     let lines = readFileLine('assets/f1.txt', 'utf16le');
-
+    //console.log(lines[99]);
     await Promise.all(
       lines.map((item) => {
         return new Promise(async (resolve) => {

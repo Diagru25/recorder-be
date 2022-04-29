@@ -12,4 +12,15 @@ export class DictionaryService extends BaseService<DictionaryDocument, any> {
   ) {
     super(_model);
   }
+
+  async incOne(id: string) {
+    await this._model.updateOne({ _id: id }, { $inc: { nofGet: 1 } });
+  }
+
+  async incMany(ids: Array<string>) {
+    await this._model.updateMany(
+      { _id: { $in: ids } },
+      { $inc: { nofGet: 1 } },
+    );
+  }
 }

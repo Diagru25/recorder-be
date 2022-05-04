@@ -1,3 +1,4 @@
+import { ConfigModule } from '@nestjs/config';
 import { DictionaryModule } from './modules/dictionary/dictionary.module';
 import { ResourcesModule } from './modules/resources/resources.module';
 import { Module } from '@nestjs/common';
@@ -8,17 +9,18 @@ import { RecordsModule } from './modules/records/records.module';
 import { UsersModule } from './modules/users/users.module';
 import { AppGateway } from './utils/app.gateway';
 @Module({
-  imports: [ 
+  imports: [
+    ConfigModule.forRoot({
+        isGlobal: true
+    }),
     DatabaseModule,
     AuthModule,
     GroupsModule,
     UsersModule,
     RecordsModule,
     ResourcesModule,
-    DictionaryModule
+    DictionaryModule,
   ],
-  providers: [
-      AppGateway
-  ]
+  providers: [AppGateway],
 })
 export class AppModule {}

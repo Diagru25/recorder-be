@@ -22,8 +22,7 @@ import {
   tbl_log,
   tbl_lockip,
   tbl_record,
-  tbl_dictionary
-  
+  tbl_dictionary,
 } from './schema';
 import { GroupsService } from './services/tbl_group.service';
 import { UsersService } from './services/tbl_user.service';
@@ -32,10 +31,16 @@ import { LogService } from './services/tbl_log.service';
 import { LockIpService } from './services/tbl_lockip.services';
 import { RecordsService } from './services/tbl_record.service';
 import { DictionaryService } from './services/tbl_dictionary.service';
-
+import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
   imports: [
-    MongooseModule.forRoot(keys.mongoURI),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_URI'),
+      }),
+      inject: [ConfigService],
+    }),
     MongooseModule.forFeature([
       {
         name: tbl_group.name,
@@ -75,7 +80,7 @@ import { DictionaryService } from './services/tbl_dictionary.service';
       },
     ]),
     JwtModule.register({
-      secret: keys.jwt.JWT_SECRET,
+      secret: process.env.JWT_SECRET,
       signOptions: {
         expiresIn: keys.jwt.expiresIn,
       },

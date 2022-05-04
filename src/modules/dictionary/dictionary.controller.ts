@@ -9,7 +9,8 @@ export class DictionaryController {
   constructor(private readonly DictionaryService: DictionaryService) {}
 
   @Get('/random_text')
-  async getAll(@Query() params: any, @Res() res: Response) {
+  async get_ran_dom_text(@Query() params: any, @Res() res: Response) {
+    console.log(process.env.TEST);
     try {
       let quantity: number = Number(params.quantity)
         ? Number(params.quantity)
@@ -39,12 +40,17 @@ export class DictionaryController {
       ]);
 
       if (result) {
-        let ids = result.map(item => item._id);
+        let ids = result.map((item) => item._id);
         await this.DictionaryService.incMany(ids);
       }
       return apiResponse(res, HttpStatus.OK, result);
     } catch (error) {
-        return apiResponse(res, HttpStatus.INTERNAL_SERVER_ERROR, error, "Lỗi db")
+      return apiResponse(
+        res,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        error,
+        'Lỗi db',
+      );
     }
   }
 }

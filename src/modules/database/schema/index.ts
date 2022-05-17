@@ -7,3 +7,5 @@ export * from './tbl_log.schema';
 export * from './tbl_lockip.schema';
 export * from './tbl_record.schema';
 export * from './tbl_dictionary.schema';
+export * from './tbl_location.schema';
+export * from './tbl_icon.schema';

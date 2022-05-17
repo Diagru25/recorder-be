@@ -66,4 +66,9 @@ export class BaseService<T extends Document, dtoT>
     const item = await this.model.aggregate(filter).exec();
     return item;
   }
+  
+  async getAllNoPaginate() {
+      const items = await this.model.find().exec();
+      return items;
+  }
 }

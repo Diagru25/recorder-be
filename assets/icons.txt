@@ -1,0 +1,18 @@
+Máy tính
+Thiết bị di động
+Máy chủ
+Máy chủ phân giải tên miền (DNS)
+Máy chủ cơ sở dữ liệu
+Máy chủ Web
+Máy chủ dịch vụ
+Máy chủ Email
+Máy chủ Pờ-róc-xy (Proxy)
+Hệ thống máy chủ
+Hệ thống phân tải
+Hệ thống máy chủ hiệu năng cao
+Thiết bị lưu trữ
+Thiết bị chuyển mạch
+Thiết bị định tuyến
+Hệ thống tường lửa
+Kênh truyền
+Hệ thống truyền dẫn

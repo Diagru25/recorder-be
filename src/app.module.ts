@@ -1,3 +1,4 @@
+import { AIModule } from './modules/ai/ai.module';
 import { ConfigModule } from '@nestjs/config';
 import { DictionaryModule } from './modules/dictionary/dictionary.module';
 import { ResourcesModule } from './modules/resources/resources.module';
@@ -20,6 +21,7 @@ import { AppGateway } from './utils/app.gateway';
     RecordsModule,
     ResourcesModule,
     DictionaryModule,
+    AIModule
   ],
   providers: [AppGateway],
 })

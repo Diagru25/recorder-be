@@ -40,14 +40,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LocationsService } from './services/tbl_location.services';
 @Module({
   imports: [
-    // MongooseModule.forRootAsync({
-    //   imports: [ConfigModule],
-    //   useFactory: async (configService: ConfigService) => ({
-    //     uri: configService.get<string>('MONGO_URI'),
-    //   }),
-    //   inject: [ConfigService],
-    // }),
-    MongooseModule.forRoot(keys.mongoURI),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_URI'),
+      }),
+      inject: [ConfigService],
+    }),
+    //MongooseModule.forRoot(keys.mongoURI),
     MongooseModule.forFeature([
       {
         name: tbl_group.name,

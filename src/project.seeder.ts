@@ -36,8 +36,8 @@ export class ProjectSeeder implements Seeder {
       icons.map((item, index) => {
         return new Promise(async (resolve) => {
           await this.iconService.insert({
-            name: item,
-            command: [item],
+            name: item.toLowerCase(),
+            command: [item.toLowerCase()],
             icon: `assets\\images\\icons\\${index + 1}.png`,
           });
           resolve(true);

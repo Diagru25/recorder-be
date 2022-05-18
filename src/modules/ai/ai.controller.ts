@@ -42,7 +42,7 @@ export class AIController {
         'Content-Type': 'multipart/form-data',
       };
       const result = await axios.post(
-        'http://localhost:5001/transcription',
+        'http://192.168.1.125:5001/transcription',
         formData,
         {
           headers,

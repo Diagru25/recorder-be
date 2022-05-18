@@ -47,7 +47,7 @@ import { LocationsService } from './services/tbl_location.services';
       }),
       inject: [ConfigService],
     }),
-    //MongooseModule.forRoot(keys.mongoURI),
+    //MongooseModule.forRoot('mongodb://192.168.1.125:27017/speechtotext'),
     MongooseModule.forFeature([
       {
         name: tbl_group.name,
@@ -111,7 +111,7 @@ import { LocationsService } from './services/tbl_location.services';
     RecordsService,
     DictionaryService,
     LocationsService,
-    IconsService
+    IconsService,
   ],
   exports: [
     GroupsService,
@@ -122,7 +122,7 @@ import { LocationsService } from './services/tbl_location.services';
     RecordsService,
     DictionaryService,
     LocationsService,
-    IconsService
+    IconsService,
   ],
 })
 export class DatabaseModule {}

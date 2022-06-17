@@ -20,6 +20,7 @@ import { firstValueFrom } from 'rxjs';
 import axios from 'axios';
 import { LocationsService } from '../database/services/tbl_location.services';
 import { IconsService } from '../database/services/tbl_icon.services';
+import { report } from 'process';
 
 @Controller('/admin/v1/ai')
 export class AIController {
@@ -58,8 +59,16 @@ export class AIController {
       const returned_icons = [];
       let returned_command = [];
 
-      const listLocations = await this.locationsService.getAllNoPaginate();
-      const listIcons = await this.iconsService.getAllNoPaginate();
+      let [listLocations, listIcons] = await Promise.all([
+        await this.locationsService.getAllNoPaginate(),
+        await this.iconsService.getAllNoPaginate()
+      ]);
+
+      // find report createdate = today;
+      //report.icons
+      //report.
+      //   const listLocations = await this.locationsService.getAllNoPaginate();
+    //   const listIcons = await this.iconsService.getAllNoPaginate();
 
       for (let i = 0; i < listLocations.length; i++) {
         const command_existed = listLocations[i].command.filter((el) =>

@@ -9,6 +9,8 @@ import { GroupsModule } from './modules/groups/groups.module';
 import { RecordsModule } from './modules/records/records.module';
 import { UsersModule } from './modules/users/users.module';
 import { AppGateway } from './utils/app.gateway';
+import { IconsModule } from './modules/icons/icons.module';
+import { LocationsModule } from './modules/locations/locations.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -21,7 +23,9 @@ import { AppGateway } from './utils/app.gateway';
     RecordsModule,
     ResourcesModule,
     DictionaryModule,
-    AIModule
+    AIModule,
+    IconsModule,
+    LocationsModule
   ],
   providers: [AppGateway],
 })

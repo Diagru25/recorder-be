@@ -10,7 +10,6 @@ export class DictionaryController {
 
   @Get('/random_text')
   async get_ran_dom_text(@Query() params: any, @Res() res: Response) {
-    console.log(process.env.TEST);
     try {
       let quantity: number = Number(params.quantity)
         ? Number(params.quantity)

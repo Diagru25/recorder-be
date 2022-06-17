@@ -17,6 +17,8 @@ import {
   DictionarySchema,
   LocationSchema,
   IconSchema,
+  ReportSchema,
+  ReportDetailSchema,
   tbl_group,
   tbl_module,
   tbl_permission,
@@ -27,7 +29,9 @@ import {
   tbl_record,
   tbl_dictionary,
   tbl_location,
-  tbl_icon
+  tbl_icon,
+  tbl_report,
+  tbl_report_detail,
 } from './schema';
 import { GroupsService } from './services/tbl_group.service';
 import { UsersService } from './services/tbl_user.service';
@@ -38,6 +42,8 @@ import { RecordsService } from './services/tbl_record.service';
 import { DictionaryService } from './services/tbl_dictionary.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LocationsService } from './services/tbl_location.services';
+import { ReportsService } from './services/tbl_report.service';
+import { ReportDetailsService } from './services/tbl_report_detail.service';
 @Module({
   imports: [
     MongooseModule.forRootAsync({
@@ -93,6 +99,14 @@ import { LocationsService } from './services/tbl_location.services';
         name: tbl_icon.name,
         schema: IconSchema,
       },
+      {
+        name: tbl_report.name,
+        schema: ReportSchema,
+      },
+      {
+        name: tbl_report_detail.name,
+        schema: ReportDetailSchema,
+      },
     ]),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
@@ -112,6 +126,8 @@ import { LocationsService } from './services/tbl_location.services';
     DictionaryService,
     LocationsService,
     IconsService,
+    ReportsService,
+    ReportDetailsService,
   ],
   exports: [
     GroupsService,
@@ -123,6 +139,8 @@ import { LocationsService } from './services/tbl_location.services';
     DictionaryService,
     LocationsService,
     IconsService,
+    ReportsService,
+    ReportDetailsService
   ],
 })
 export class DatabaseModule {}

@@ -9,3 +9,5 @@ export * from './tbl_record.schema';
 export * from './tbl_dictionary.schema';
 export * from './tbl_location.schema';
 export * from './tbl_icon.schema';
+export * from './tbl_report.schema';
+export * from './tbl_report_detail.schema';

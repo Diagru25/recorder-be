@@ -38,7 +38,7 @@ export class ProjectSeeder implements Seeder {
           await this.iconService.insert({
             name: item.toLowerCase(),
             command: [item.toLowerCase()],
-            icon: `assets\\images\\icons\\${index + 1}.png`,
+            icon: `assets/images/icons/${index + 1}.png`,
           });
           resolve(true);
         });

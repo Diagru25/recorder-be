@@ -25,7 +25,7 @@ export class LocationsController {
   async getAll(@Query() params: any, @Res() res: Response) {
     const result = await this.locationsService.getAllNoPaginate();
 
-    return apiResponse(res, HttpStatus.OK, { items: result });
+    return apiResponse(res, HttpStatus.OK, result);
   }
   //   @Post()
   //   async insert(@Body() data: any, @Res() res: Response) {

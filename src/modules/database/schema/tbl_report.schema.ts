@@ -7,6 +7,9 @@ let d = new Date();
 
 @Schema()
 export class tbl_report {
+  @Prop()
+  name: string;
+  
   @Prop({
     required: true,
     default: new Date(

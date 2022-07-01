@@ -11,6 +11,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AppGateway } from './utils/app.gateway';
 import { IconsModule } from './modules/icons/icons.module';
 import { LocationsModule } from './modules/locations/locations.module';
+import { ReportsModule } from './modules/reports/reports.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,7 +26,8 @@ import { LocationsModule } from './modules/locations/locations.module';
     DictionaryModule,
     AIModule,
     IconsModule,
-    LocationsModule
+    LocationsModule,
+    ReportsModule
   ],
   providers: [AppGateway],
 })

@@ -13,6 +13,11 @@ export class BaseService<T extends Document, dtoT>
     return item;
   }
 
+  async insertMany(listEntity: Array<dtoT>){
+    const items = await this.model.insertMany(listEntity);
+    return items;
+  }
+
   async update(id, entity: dtoT) {
     const item = await this.model.findByIdAndUpdate(id, entity, { new: true });
     return item;

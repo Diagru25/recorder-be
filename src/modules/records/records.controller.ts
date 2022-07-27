@@ -22,6 +22,33 @@ import { extname } from 'path';
 export class RecordsController {
   constructor(private readonly recordsService: RecordsService) {}
 
+  @Get('random_compare')
+  async getRandomCompare(@Query() params: any, @Res() res: Response) {
+    try {
+      let quantity: number = Number(params.quantity)
+        ? Number(params.quantity)
+        : 5;
+
+      let filter = [
+        {
+          $sample: { size: quantity },
+        },
+      ];
+
+      const result = await this.recordsService.getFilter(filter);
+
+      return apiResponse(res, HttpStatus.OK, result);
+    } catch (error) {
+      console.log(error);
+      return apiResponse(
+        res,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        error,
+        'error!',
+      );
+    }
+  }
+
   @Get(':id')
   async getOneById(@Param('id') id: any, @Res() res: Response) {
     try {
@@ -39,7 +66,7 @@ export class RecordsController {
     let page_size: number = Number(params.page_size)
       ? Number(params.page_size)
       : 1;
-    let text_search: any = params.text_search;
+    let text_search: any = params.text_search || '';
 
     let filter = [
       {
@@ -72,6 +99,26 @@ export class RecordsController {
       page_size,
     );
     return apiResponse(res, HttpStatus.OK, result);
+  }
+
+  @Post('update_compare')
+  async updateCompare(@Body() data, @Res() res: Response) {
+    try {
+      const dataList = data.dataList || [];
+
+      const result = await this.recordsService.updateManyCompare(dataList);
+
+      if (result) return apiResponse(res, HttpStatus.OK, {});
+      else
+        return apiResponse(res, HttpStatus.INTERNAL_SERVER_ERROR, {}, 'error!');
+    } catch (error) {
+      return apiResponse(
+        res,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        error,
+        'error!',
+      );
+    }
   }
 
   @Post('upload')
@@ -110,12 +157,12 @@ export class RecordsController {
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string, @Res() res: Response ) {
-      try {
-          const result = await this.recordsService.remove(id);
-          return apiResponse(res, HttpStatus.OK, {});
-      } catch (error) {
-          return apiResponse(res, HttpStatus.BAD_REQUEST, {}, error);
-      }
+  async delete(@Param('id') id: string, @Res() res: Response) {
+    try {
+      const result = await this.recordsService.remove(id);
+      return apiResponse(res, HttpStatus.OK, {});
+    } catch (error) {
+      return apiResponse(res, HttpStatus.BAD_REQUEST, {}, error);
+    }
   }
 }

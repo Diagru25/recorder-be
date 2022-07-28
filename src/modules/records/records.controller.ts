@@ -121,6 +121,37 @@ export class RecordsController {
     }
   }
 
+  @Post('upload_one')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './assets/audios',
+        filename: (req, files, cb) => {
+          const randomName = Array(32)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 16).toString(16))
+            .join('');
+          return cb(null, `${randomName}${extname(files.originalname)}`);
+        },
+      }),
+    }),
+  )
+  async uploadOne(@Body() data, @UploadedFile() file, @Res() res: Response) {
+    try {
+      let record = {
+        audio: file.path,
+        text: data.text,
+        gender: data.gender,
+        area: data.area,
+        age: data.age,
+      };
+      await this.recordsService.insert(record);
+      return apiResponse(res, HttpStatus.CREATED, {}, 'success');
+    } catch (error) {
+      return apiResponse(res, HttpStatus.BAD_REQUEST, {}, error);
+    }
+  }
+
   @Post('upload')
   @UseInterceptors(
     FilesInterceptor('files', 5, {

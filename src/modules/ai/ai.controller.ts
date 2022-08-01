@@ -22,6 +22,7 @@ import { LocationsService } from '../database/services/tbl_location.services';
 import { IconsService } from '../database/services/tbl_icon.services';
 import { Types } from 'mongoose';
 import { ReportDetailsService } from '../database/services/tbl_report_detail.service';
+import { fileURLToPath } from 'url';
 
 @Controller('/admin/v1/ai')
 export class AIController {
@@ -139,6 +140,36 @@ export class AIController {
         error,
         'error!',
       );
+    }
+  }
+
+  @Post('transcription_mta')
+  @UseInterceptors(FileInterceptor('file'))
+  async transcriptionMta(@Body() body: any, @UploadedFile() file, @Res() res: Response) {
+    try {
+        var axios = require('axios');
+    var FormData = require('form-data');
+    // var fs = require('fs');
+    var data = new FormData();
+    data.append('language', '1');
+    data.append('the_file', file.buffer, { filename: file.originalname });
+    //formData.append('file', file.buffer, { filename: file.originalname });
+    //data.append('Content_Type', 'application/json');
+
+    var config = {
+      method: 'post',
+      url: 'https://asr.hpda.vn/recog',
+      headers: {
+        ...data.getHeaders(),
+      },
+      data: data,
+    };
+
+    const response = await axios(config);
+    return apiResponse(res, HttpStatus.OK, response.data, 'success');
+    }
+    catch (error) {
+        return apiResponse(res, HttpStatus.INTERNAL_SERVER_ERROR, error, 'error!')
     }
   }
 }
